@@ -169,10 +169,10 @@ import time
 import os
 
 @schema
-class ComponentAutoSegmentOrphan(dj.Computed):
+class ComponentAutoSegmentFinal(dj.Computed):
     definition = """
     # creates the labels for the mesh table
-    -> ta3p100.CompartmentOrphan.ComponentOrphan
+    -> ta3p100.CompartmentFinal.ComponentFinal
     clusters     : tinyint unsigned  #what the clustering parameter was set to
     smoothness   : decimal(3,2)             #what the smoothness parameter was set to, number betwee 0 and 1
     ---
@@ -186,7 +186,7 @@ class ComponentAutoSegmentOrphan(dj.Computed):
     time_updated : timestamp    # the time at which the segmentation was performed
    """
     
-    key_source = ta3p100.CompartmentOrphan.ComponentOrphan & 'n_triangle_indices>100' & [dict(compartment_type=comp) for comp in ['Basal', 'Apical', 'Oblique', 'Dendrite']]
+    key_source = ta3p100.CompartmentFinal.ComponentFinal & 'n_triangle_indices>100' & [dict(compartment_type=comp) for comp in ['Basal', 'Apical', 'Oblique', 'Dendrite']]
     
     whole_neuron_dicts = dict()
     
@@ -208,7 +208,7 @@ class ComponentAutoSegmentOrphan(dj.Computed):
         basal_big = [16]
 
         neuron_ID = key["segment_id"]
-        component = (ta3p100.CompartmentOrphan.ComponentOrphan & key).fetch1()        
+        component = (ta3p100.CompartmentFinal.ComponentFinal & key).fetch1()        
 
         component_id = component["component_index"]
         compartment_type = component["compartment_type"]
@@ -240,7 +240,7 @@ class ComponentAutoSegmentOrphan(dj.Computed):
             triangle_indices"""
             
             if key['segment_id'] not in self.whole_neuron_dicts:
-                self.whole_neuron_dicts[key['segment_id']] = (ta3p100.CleansedMeshOrphan & 'decimation_ratio=0.35' & dict(segment_id=key['segment_id'])).fetch1()
+                self.whole_neuron_dicts[key['segment_id']] = (ta3p100.CleansedMesh & 'decimation_ratio=0.35' & dict(segment_id=key['segment_id'])).fetch1()
             
             path_and_filename, off_file_name = generate_component_off_file(neuron_ID, compartment_type, component_id,
                                         component["n_vertex_indices"],
@@ -328,6 +328,6 @@ class ComponentAutoSegmentOrphan(dj.Computed):
 # In[ ]:
 
 
-ComponentAutoSegmentOrphan.populate(reserve_jobs=True)
+ComponentAutoSegmentFinal.populate(reserve_jobs=True)
 print("finished")
 

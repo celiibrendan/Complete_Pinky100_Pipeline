@@ -75,7 +75,7 @@ struct Display_polylines{
 };
 // This example extracts a medially centered skeleton from a given mesh.
 int calcification(const char* location_with_filename)
-{}
+{
     //std::ifstream input((argc>1)?argv[1]:"data/elephant.off");
 
     //WORKED FOR ELEPHANT EXAMPLE BELOW

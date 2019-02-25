@@ -2,7 +2,7 @@ from distutils.core import setup, Extension
 
 module = Extension("calcfication_Module",
                    sources = ["skeleton_module.cpp"],
-                   extra_link_args=[])
+                   extra_link_args=['-leigen3','-lCGAL','-lgmp','-lboost'])
 
 setup(name="Calcfication",
       version = "1.0",

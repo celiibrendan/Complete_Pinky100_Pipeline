@@ -5,7 +5,7 @@ RUN apt-get -y update && \
     apt-get -y install graphviz libxml2-dev python3-cairosvg parallel
 
 # CGAL Dependencies ########################################################
-RUN apt-get -y install libboost-all-dev libgmp-dev libmpfr-dev libcgal-dev libboost-wave-dev
+RUN apt-get -y install libboost-all-dev libgmp-dev libmpfr-dev libcgal-dev libboost-wave-dev libeigen3-dev
 ############################################################################
 
 RUN pip3 install datajoint --upgrade
@@ -30,7 +30,7 @@ RUN pip3 install -e /src/CGAL
 WORKDIR /notebooks
 
 #add the cgal scripts
-EXPOSE 8890
+EXPOSE 8895
 
 RUN mkdir -p /scripts
 ADD ./jupyter/run_jupyter.sh /scripts/

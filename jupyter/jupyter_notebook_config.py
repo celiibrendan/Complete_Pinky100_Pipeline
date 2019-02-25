@@ -1,7 +1,7 @@
 #Accept all incoming requests
 c.NotebookApp.ip = '0.0.0.0'
 
-c.NotebookApp.port = 8890
+c.NotebookApp.port = 8895
 
 c.NotebookApp.open_browser = False
 

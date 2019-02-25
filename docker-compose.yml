@@ -9,6 +9,6 @@ services:
       - DISPLAY=$DISPLAY
       - XSOCK=/tmp/.X11-unix/X0
     ports:
-      - "8890:8890"
+      - "8895:8895"
     volumes:
       - ./notebooks:/notebooks

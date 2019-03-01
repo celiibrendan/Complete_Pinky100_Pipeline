@@ -1,7 +1,7 @@
 <!DOCTYPE FilterScript>
 <FilterScript>
  <filter name="Delete Selected Vertices"/>
- <xmlfilter name="Screened Poisson Surface Reconstruction">
+<!-- <xmlfilter name="Screened Poisson Surface Reconstruction">
   <xmlparam value="0" name="cgDepth"/>
   <xmlparam value="false" name="confidence"/>
   <xmlparam value="10" name="depth"/>
@@ -13,5 +13,6 @@
   <xmlparam value="1.1" name="scale"/>
   <xmlparam value="false" name="visibleLayer"/>
  </xmlfilter>
+-->
  <filter name="Delete Current Mesh"/>
 </FilterScript>

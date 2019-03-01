@@ -1,3 +1,4 @@
+FROM hamzamerzic/meshlab
 FROM ninai/pipeline:base
 LABEL maintainer="Christos Papadopoulos"
 
@@ -37,4 +38,6 @@ ADD ./jupyter/run_jupyter.sh /scripts/
 ADD ./jupyter/jupyter_notebook_config.py /root/.jupyter/
 ADD ./jupyter/custom.css /root/.jupyter/custom/
 RUN chmod -R a+x /scripts
+
+#FROM hamzamerzic/meshlab
 ENTRYPOINT ["/scripts/run_jupyter.sh"]

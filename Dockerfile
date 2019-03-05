@@ -1,5 +1,6 @@
-FROM hamzamerzic/meshlab
+#ROM hamzamerzic/meshlab
 FROM ninai/pipeline:base
+#FROM hamzamerzic/meshlab
 LABEL maintainer="Christos Papadopoulos"
 
 RUN apt-get -y update && \
@@ -28,6 +29,13 @@ ADD ./CGAL /src/CGAL
 RUN pip3 install -e /src/CGAL
 
 
+#-------The part of the script that add meshlabserver to path ----#
+#RUN bash
+#RUN /bin/bash export PATH=${PATH}:/meshlab/src/distrib
+#RUN /bin/bash function meshlabserver() { xvfb-run -a -s "-screen 0 800x600x24" meshlabserver $@; }
+#RUN /bin/bash export -f meshlabserver
+
+
 WORKDIR /notebooks
 
 #add the cgal scripts
@@ -39,5 +47,7 @@ ADD ./jupyter/jupyter_notebook_config.py /root/.jupyter/
 ADD ./jupyter/custom.css /root/.jupyter/custom/
 RUN chmod -R a+x /scripts
 
+
+#FROM hamzamerzic/meshlab
 #FROM hamzamerzic/meshlab
 ENTRYPOINT ["/scripts/run_jupyter.sh"]

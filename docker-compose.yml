@@ -1,7 +1,7 @@
 version: '2'
 services:
   notebook:
-    image: auto-segmentation
+    image: mesh_cgal:v2
     build:
       context: .
     env_file: .env
@@ -12,3 +12,4 @@ services:
       - "8895:8895"
     volumes:
       - ./notebooks:/notebooks
+      - ./meshlab:/meshlab

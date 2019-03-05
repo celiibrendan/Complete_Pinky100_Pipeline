@@ -1,0 +1,2 @@
+function meshlabserver() { xvfb-run -a -s "-screen 0 800x600x24" meshlabserver $@; }
+export -f meshlabserver

@@ -1,69 +1,7 @@
-FROM hamzamerzic/meshlab
-LABEL maintainer="Brendan Papadopoulos"
-
-############################# -------- BEGINNING OF NINAI   --------#######################
-
-ARG DEBIAN_FRONTEND=noninteractive
-
-###############################################################################
-# Install some optimization libraries (used by many libraries below)
-RUN apt-get update && \
-    apt-get install -y libopenblas-dev libatlas-base-dev libeigen3-dev && \
-    export MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1   
-
-###############################################################################
-# Install Python 3
-RUN apt-get update && \
-    apt-get install -y python3-dev python3-pip python3-numpy python3-scipy \
-        python3-matplotlib
-
-#######################  CELII ADDED   ###############################
-RUN pip3 install --upgrade pip
-RUN apt-get -y install gcc g++
-RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
-#######################  CELII ADDED STOP  ###############################
-
-## Get dependencies
-RUN apt-get update && \
-    apt-get install -y build-essential cmake git pkg-config libgtk-3-dev \
-                       libavcodec-dev libavformat-dev libswscale-dev \
-    # To recompile CUDA we need an slightly older compiler (current is gcc 7)
-#                       gcc-6 g++-6 \
-    # Optional dependencies
-                       libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev \
-                       libxvidcore-dev libx264-dev libhdf5-dev ffmpeg
-    # Camera support
-#                      libdc1394-22-dev libv4l-devel # camera support
-
-
-RUN apt-get install wget
-
-# Install CaImAn
-# Install dependencies
-RUN apt-get install -y python3-tk && \
-    pip3 install future cvxpy scikit-learn scikit-image tensorflow keras \
-                 peakutils \
-    # Unused but required (imported in code)
-                 ipyparallel Cython h5py tqdm psutil
-
-RUN apt-get install autoconf automake libtool
-
-###############################################################################
-# Miscelaneous packages
-RUN pip3 install git+https://github.com/datajoint/datajoint-python.git && \
-    pip3 install git+https://github.com/atlab/scanreader.git && \
-#    pip3 install git+https://github.com/cajal/bl3d.git && \
-    pip3 install seaborn slacker imreg_dft pandas imageio
-RUN apt-get install -y python3-git
-
-# Optional
-RUN apt-get install -y nano graphviz && \
-    pip3 install nose2 jupyterlab
-
-
-############################# -------- END UP NINAI   --------#######################
-
-############################# -------- BEGINNING OF CHRISTOS CONTAINER   --------#######################
+#ROM hamzamerzic/meshlab
+FROM ninai/pipeline:base
+#FROM hamzamerzic/meshlab
+LABEL maintainer="Christos Papadopoulos"
 
 RUN apt-get -y update && \
     apt-get -y install graphviz libxml2-dev python3-cairosvg parallel
@@ -91,6 +29,12 @@ ADD ./CGAL /src/CGAL
 RUN pip3 install -e /src/CGAL
 
 
+#-------The part of the script that add meshlabserver to path ----#
+#RUN bash
+#RUN /bin/bash export PATH=${PATH}:/meshlab/src/distrib
+#RUN /bin/bash function meshlabserver() { xvfb-run -a -s "-screen 0 800x600x24" meshlabserver $@; }
+#RUN /bin/bash export -f meshlabserver
+
 
 WORKDIR /notebooks
 
@@ -103,8 +47,7 @@ ADD ./jupyter/jupyter_notebook_config.py /root/.jupyter/
 ADD ./jupyter/custom.css /root/.jupyter/custom/
 RUN chmod -R a+x /scripts
 
+
+#FROM hamzamerzic/meshlab
+#FROM hamzamerzic/meshlab
 ENTRYPOINT ["/scripts/run_jupyter.sh"]
-
-
-
-

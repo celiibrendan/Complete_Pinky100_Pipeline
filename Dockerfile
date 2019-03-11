@@ -1,38 +1,49 @@
+FROM hamzamerzic/meshlab
 FROM ninai/pipeline:base
 
-#FROM ubuntu:xenial
+LABEL maintainer="Christos Papadopoulos"
 
-RUN apt-get update && apt-get install -q -y \
-    build-essential \
-    python \
-    python-numpy \
-    git \
-    g++ \
-    libeigen3-dev \
-    qt5-qmake \
-    qtscript5-dev \
-    libqt5xmlpatterns5-dev \
-    libqt5opengl5-dev \
-    assimp-utils \
-    nano \
-    xvfb \
-    && rm -rf /var/lib/apt/lists/*
+#ADD /meshlab /meshlab
+#COPY --from=hamzamerzic/meshlab ./README.md /meshlab/README.md
+RUN apt-get -y update
+#RUN apt-get -y install software-properties-common
+#RUN add-apt-repository ppa:zarquon42/meshlab
+#RUN apt-get -y update
+RUN apt-get -y install meshlab
+RUN apt-get -y install xvfb
 
-RUN git clone https://github.com/hamzamerzic/vcglib -b devel
-RUN git clone https://github.com/hamzamerzic/meshlab -b devel
+RUN apt-get -y update && \
+    apt-get -y install graphviz libxml2-dev python3-cairosvg parallel
 
-ARG QMAKE_FLAGS="-spec linux-g++ CONFIG+=release CONFIG+=qml_release CONFIG+=c++11 QMAKE_CXXFLAGS+=-fPIC QMAKE_CXXFLAGS+=-std=c++11 QMAKE_CXXFLAGS+=-fpermissive INCLUDEPATH+=/usr/include/eigen3 LIBS+=-L/meshlab/src/external/lib/linux-g++"
-ARG MAKE_FLAGS="-j"
+# CGAL Dependencies ########################################################
+RUN apt-get -y install libboost-all-dev libgmp-dev libmpfr-dev libcgal-dev libboost-wave-dev libeigen3-dev
+############################################################################
 
-WORKDIR /meshlab/src/external
-RUN qmake -qt=5 external.pro $QMAKE_FLAGS && make $MAKE_FLAGS
+RUN pip3 install datajoint --upgrade
+RUN pip3 install python-igraph xlrd
 
-WORKDIR /meshlab/src/common
-RUN qmake -qt=5 common.pro $QMAKE_FLAGS && make $MAKE_FLAGS
 
-WORKDIR /meshlab/src
-RUN qmake -qt=5 meshlab_mini.pro $QMAKE_FLAGS && make $MAKE_FLAGS
-RUN qmake -qt=5 meshlab_full.pro $QMAKE_FLAGS && make $MAKE_FLAGS
+WORKDIR /src
+
+RUN pip3 install ipyvolume jupyterlab statsmodels pycircstat nose
+RUN pip3 install seaborn --upgrade
+RUN pip3 install jgraph
+
+#RUN add-apt-repository ppa:boost-latest/ppa
+#RUN apt-get update
+
+RUN apt-get -y install vim
+RUN . /etc/profile
+ADD ./CGAL /src/CGAL
+RUN pip3 install -e /src/CGAL
+
+
+#-------The part of the script that add meshlabserver to path ----#
+#RUN bash
+#RUN /bin/bash export PATH=${PATH}:/meshlab/src/distrib
+#RUN /bin/bash function meshlabserver() { xvfb-run -a -s "-screen 0 800x600x24" meshlabserver $@; }
+#RUN /bin/bash export -f meshlabserver
+
 
 WORKDIR /notebooks
 
@@ -41,9 +52,11 @@ EXPOSE 8895
 
 RUN mkdir -p /scripts
 ADD ./jupyter/run_jupyter.sh /scripts/
+ADD ./setup_meshlabserver.sh /scripts/
 ADD ./jupyter/jupyter_notebook_config.py /root/.jupyter/
 ADD ./jupyter/custom.css /root/.jupyter/custom/
 RUN chmod -R a+x /scripts
+RUN /usr/bin/env bash -c "source /scripts/setup_meshlabserver.sh"
 
 
 #FROM hamzamerzic/meshlab

@@ -1,48 +1,35 @@
 FROM hamzamerzic/meshlab
-
-#RUN apt-get update \
-#  && apt-get install -y python3-pip python3-dev \
-#  && cd /usr/local/bin \
-#  && ln -s /usr/bin/python3 python \
-#  && pip3 install --upgrade pip
-
-RUN apt-get update
-RUN apt-get install -y software-properties-common vim
-RUN add-apt-repository ppa:jonathonf/python-3.6
-RUN apt-get update
-
-RUN apt-get install -y build-essential python3.6 python3.6-dev python3-pip python3.6-venv
-RUN apt-get install -y git
-
-# update pip
-RUN python3.6 -m pip install pip --upgrade
-RUN python3.6 -m pip install wheel
-
-#RUN apt-get update && apt-get -y upgrade
-#RUN apt-get install -y build-essential python-dev
-#RUN apt-get install -y python python-distribute python-pip
-#RUN pip install pip --upgrade
-RUN pip3 install jupyterlab
-
+LABEL maintainer="Brendan Papadopoulos"
 RUN apt-get -y update
-RUN apt-get -y install libxml2-dev python3-cairosvg
 
-WORKDIR /src
+###############################################################################
+# Install some optimization libraries (used by many libraries below)
+RUN apt-get update && \
+    apt-get install -y libopenblas-dev libatlas-base-dev libeigen3-dev && \
+    export MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
 
-RUN apt-get -y install vim
+###############################################################################
+# Install Python 3
+RUN apt-get update && \
+    apt-get install -y python3-dev python3-pip python3-numpy python3-scipy \
+        python3-matplotlib
+
+###############################################################################
+# Install OpenCV 3.4.3 with CUDA support (take a seat, this takes hours)
+# With no CUDA support: sudo apt-get install python3-opencv
+RUN pip3 install --upgrade pip
+RUN pip3 install nose2 jupyterlab
 
 #add the cgal scripts
 EXPOSE 8896
 
-WORKDIR /
-RUN apt-get install -y libassimp-dev
-
 RUN mkdir -p /scripts
 ADD ./jupyter/run_jupyter.sh /scripts/
-ADD ./meshlab/add_meshlab.sh /scripts/
 ADD ./jupyter/jupyter_notebook_config.py /root/.jupyter/
 ADD ./jupyter/custom.css /root/.jupyter/custom/
 RUN chmod -R a+x /scripts
-RUN /usr/bin/env bash -c "source /scripts/add_meshlab.sh"
+
+
+#FROM hamzamerzic/meshlab
+#FROM hamzamerzic/meshlab
 ENTRYPOINT ["/scripts/run_jupyter.sh"]
-#CMD source /scripts/add_meshlab.sh 

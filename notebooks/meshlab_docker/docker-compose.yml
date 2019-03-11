@@ -1,7 +1,7 @@
 version: '2'
 services:
   notebook:
-    image: meshlab3:v4
+    image: meshlab_testing 
     build:
       context: .
     env_file: .env

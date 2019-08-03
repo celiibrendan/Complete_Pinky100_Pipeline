@@ -1,0 +1,21 @@
+Things added to docker:
+
+installed rtree using: pip install python3-rtree (didn't work using pip way)
+--> actually it is: sudo apt install python3-rtree
+
+pip3 install nbconvert
+
+To install the 3D networkx
+pip install mayavi
+pip install PyQt5
+
+$ jupyter nbextension install --py mayavi --user
+jupyter nbextension enable mayavi --user --py
+$ jupyter nbextension enable --py mayavi --user
+
+
+git clone https://github.com/pyvista/pyvista.git
+cd pyvista
+python -m pip install -e .
+
+pip3 install pymeshfix --upgrade

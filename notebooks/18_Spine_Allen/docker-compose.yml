@@ -1,0 +1,15 @@
+version: '2'
+services:
+  notebook:
+    image: mesh_cgal_final:v4
+    build:
+      context: .
+    env_file: .env
+    environment:
+      - DISPLAY=$DISPLAY
+      - XSOCK=/tmp/.X11-unix/X0
+    ports:
+      - "8895:8895"
+    volumes:
+      - ./notebooks:/notebooks
+      - ./meshlab:/meshlab

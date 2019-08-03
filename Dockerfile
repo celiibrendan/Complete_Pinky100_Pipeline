@@ -1,17 +1,13 @@
-FROM ninai/pipeline:base
+FROM ubuntu:18.04
 LABEL maintainer="Brendan Papadopoulos"
-
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends apt-utils
 RUN apt-get -y update && \
     apt-get -y install graphviz libxml2-dev python3-cairosvg parallel
 
 
-#install meshlab and dependencies
-RUN apt-get -y install meshlab xvfb
-
-# CGAL Dependencies ########################################################
-RUN apt-get -y install libboost-all-dev libgmp-dev libmpfr-dev libcgal-dev libboost-wave-dev
-############################################################################
-
+RUN apt-get -y install python3.7
+RUN apt -y install python3-pip
 RUN pip3 install datajoint --upgrade
 RUN pip3 install python-igraph xlrd
 
@@ -27,23 +23,35 @@ RUN pip3 install jgraph
 RUN apt-get -y install vim
 RUN . /etc/profile
 
-#add the segmentation python library
-ADD ./CGAL/cgal_segmentation /src/CGAL/cgal_segmentation
-RUN pip3 install -e /src/CGAL/cgal_segmentation
+RUN apt-get update && apt-get install -q -y \
+    build-essential \
+    python \
+    python-numpy \
+    git \
+    g++ \
+    libeigen3-dev \
+    qt5-qmake \
+    qtscript5-dev \
+    libqt5xmlpatterns5-dev \
+    libqt5opengl5-dev \
+    assimp-utils \
+    nano \
+    xvfb \
+    && rm -rf /var/lib/apt/lists/*
 
-#add the skeletonization python library
-ADD ./CGAL/cgal_skeleton /src/CGAL/cgal_skeleton
-RUN pip3 install -e /src/CGAL/cgal_skeleton
 
 
-
-
-WORKDIR /notebooks
+WORKDIR /
 
 #add the cgal scripts
-EXPOSE 8895
+EXPOSE 8888
 
 #add the cgal scripts
+#RUN git clone https://github.com/sdorkenw/MeshParty.git
+#WORKDIR /MeshParty
+#RUN pip3 install . --upgrade
+
+RUN pip3 install pykdtree trimesh
 
 RUN mkdir -p /scripts
 ADD ./jupyter/run_jupyter.sh /scripts/

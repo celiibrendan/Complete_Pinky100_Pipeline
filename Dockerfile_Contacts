@@ -54,34 +54,6 @@ EXPOSE 8888
 RUN pip3 install pykdtree trimesh 
 RUN pip3 install sklearn pymeshfix
 
-#------------ 8/4 NEW ADDED FOR CGAL, MESHLAB AND OTHER APPLICATIONS -----  #
-
-#ADD /meshlab /meshlab
-#COPY --from=hamzamerzic/meshlab ./README.md /meshlab/README.md
-RUN apt-get -y update
-#RUN apt-get -y install software-properties-common
-#RUN add-apt-repository ppa:zarquon42/meshlab
-#RUN apt-get -y update
-RUN apt-get -y install meshlab
-
-RUN apt-get -y update && \
-    apt-get -y install graphviz libxml2-dev python3-cairosvg parallel
-
-# CGAL Dependencies ########################################################
-RUN apt-get -y install libboost-all-dev libgmp-dev libmpfr-dev libcgal-dev libboost-wave-dev libeigen3-dev
-############################################################################
-
-
-RUN apt-get -y install vim
-RUN . /etc/profile
-ADD ./CGAL /src/CGAL
-RUN pip3 install -e /src/CGAL/cgal_segmentation
-#RUN pip3 install -e /src/CGAL/cgal_skeleton
-
-
 RUN mkdir -p /scripts
-ADD ./jupyter/run_jupyter_unix.sh /scripts/
-ADD ./jupyter/jupyter_notebook_config.py /root/.jupyter/
-ADD ./jupyter/custom.css /root/.jupyter/custom/
-RUN chmod -R a+x /scripts
-ENTRYPOINT ["/scripts/run_jupyter_unix.sh"]
+ADD ./notebooks/Pass_2_Analysis/Rerun_Contact_Tables/Contact_Correlation_Redo.py /scripts/
+

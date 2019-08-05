@@ -1,42 +1,41 @@
-apiVersion: batch/v1 # Jobs Default K8 API
-kind: Job # This tells kubernetes what kind of class it is working with
-metadata:
-  name: celii-contact-correlation # Name of the Job
-spec:
-  parallelism: 1 # Run one instance of Resnet benchmark
-  template: # Pod Templete
-    spec:
-      restartPolicy: OnFailure # Options are Always, OnFailure, and Never.
-      hostNetwork: true # This option will allow the pod to use the host network for internet access
-      containers:
-      - name: celii_correlation # Container name (Can be set to whatever)
-        image: celiib/contact_correlation_rerun:latest # Docker Image hosted on Docker Hub
-        env: # This section refers to secrets created under the user namespace and set them as enviorment variables
-        - name: DJ_HOST
-          valueFrom:
-            secretKeyRef:
-              name: datajoint-credentials
-              key: DJ_HOST
-        - name: DJ_USER
-          valueFrom:
-            secretKeyRef:
-              name: datajoint-credentials
-              key: DJ_USER
-        - name: DJ_PASS
-          valueFrom:
-            secretKeyRef:
-              name: datajoint-credentials
-              key: DJ_PASS
-        - name: GITHUB_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: github-credentials
-              key: GITHUB_USERNAME
-        - name: GITHUB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: github-credentials
-              key: GITHUB_PASSWORD
-        command: ["/bin/bash"] # Entry point for the container
-        args: ["-c", "git clone https://$(GITHUB_USERNAME):$(GITHUB_PASSWORD)@https://github.com/celiibrendan/Complete_Pinky100_Pipeline.git \
-        && python3 -u Complete_Pinky100_Pipeline/tree/master/notebooks/Pass_2_Analysis/Rerun_Contact_Tables/Contact_Correlation_Redo.py"] 
+  apiVersion: batch/v1 # Jobs Default K8 API
+  kind: Job # This tells kubernetes what kind of class it is working with
+  metadata:
+    name: celii-axon-real-correlation # Name of the Job
+  spec:
+    parallelism: 1 # Run one instance of Resnet benchmark
+    template: # Pod Templete
+      spec:
+        restartPolicy: OnFailure # Options are Always, OnFailure, and Never.
+        hostNetwork: true # This option will allow the pod to use the host network for internet access
+        containers:
+        - name: celii-axon-real-correlation # Container name (Can be set to whatever)
+          image: celiib/contact_correlation_rerun:latest # Docker Image hosted on Docker Hub
+          env: # This section refers to secrets created under the user namespace and set them as enviorment variables
+          - name: DJ_HOST
+            valueFrom:
+              secretKeyRef:
+                name: datajoint-credentials
+                key: DJ_HOST
+          - name: DJ_USER
+            valueFrom:
+              secretKeyRef:
+                name: datajoint-credentials
+                key: DJ_USER
+          - name: DJ_PASS
+            valueFrom:
+              secretKeyRef:
+                name: datajoint-credentials
+                key: DJ_PASS
+          - name: GITHUB_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: github-credentials
+                key: GITHUB_USERNAME
+          - name: GITHUB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: github-credentials
+                key: GITHUB_PASSWORD
+          command: ["/bin/bash"] # Entry point for the container
+          args: ["-c", "git clone https://github.com/celiibrendan/Complete_Pinky100_Pipeline.git && python3 /Complete_Pinky100_Pipeline/notebooks/Pass_2_Analysis/Rerun_Contact_Tables/ContactCorrelationClusters/ContactCorrelationAxon_pinky.py" ]

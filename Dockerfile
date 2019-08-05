@@ -78,6 +78,8 @@ ADD ./CGAL /src/CGAL
 RUN pip3 install -e /src/CGAL/cgal_segmentation
 #RUN pip3 install -e /src/CGAL/cgal_skeleton
 
+RUN pip3 install nose pycircstat matplotlib scipy
+
 
 RUN mkdir -p /scripts
 ADD ./jupyter/run_jupyter_unix.sh /scripts/

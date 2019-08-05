@@ -219,7 +219,7 @@ class ContactCorrelation(dj.Computed):
         
         for i,posts in tqdm(enumerate(segment_pairs)):
             index = 4
-            multiple = 24231
+            multiple = 96924
             if i < index*multiple:
                 continue
             if i > (index+1)*multiple:

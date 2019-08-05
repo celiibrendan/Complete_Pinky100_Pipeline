@@ -225,7 +225,7 @@ class ContactCorrelation(dj.Computed):
         
         for i,posts in tqdm(enumerate(segment_pairs)):
             index = 0
-            multiple = 24231
+            multiple = 96924
             if i < index*multiple:
                 continue
             if i > (index+1)*multiple:
@@ -468,10 +468,10 @@ ContactCorrelation.populate()
 print("Total time = " + str(time.time() - start_time))
 
 
-# In[7]:
+# In[1]:
 
 
-484620/20
+484620/5
 
 
 # In[8]:

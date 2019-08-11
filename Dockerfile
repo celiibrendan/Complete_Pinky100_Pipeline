@@ -10,6 +10,7 @@ RUN apt-get -y install python3.7
 RUN apt -y install python3-pip
 RUN pip3 install datajoint --upgrade
 RUN pip3 install python-igraph xlrd
+RUN pip3 install matplotlib==3.0.3
 
 
 WORKDIR /src
@@ -78,7 +79,7 @@ ADD ./CGAL /src/CGAL
 RUN pip3 install -e /src/CGAL/cgal_segmentation
 #RUN pip3 install -e /src/CGAL/cgal_skeleton
 
-RUN pip3 install nose pycircstat matplotlib scipy
+RUN pip3 install nose pycircstat scipy
 
 
 RUN mkdir -p /scripts

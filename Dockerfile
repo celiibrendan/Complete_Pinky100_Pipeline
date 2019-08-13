@@ -13,6 +13,7 @@ RUN pip3 install python-igraph xlrd
 RUN pip3 install matplotlib==3.0.3
 
 
+
 WORKDIR /src
 
 RUN pip3 install ipyvolume jupyterlab statsmodels pycircstat nose
@@ -79,7 +80,11 @@ ADD ./CGAL /src/CGAL
 RUN pip3 install -e /src/CGAL/cgal_segmentation
 #RUN pip3 install -e /src/CGAL/cgal_skeleton
 
-RUN pip3 install nose pycircstat scipy
+
+RUN pip3 install scipy pandas
+
+ADD ./python /src/funconnect/python
+RUN pip3 install -e /src/funconnect/python
 
 
 RUN mkdir -p /scripts

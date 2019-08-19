@@ -1,0 +1,17 @@
+pinky.SynapseCompartmentSpineLabelRevised 
+- has both of the spine and compartment label for a synapse combine
+
+NeuriteTargetsRevised
+- uses the pinky.SynapseCompartmentSpineLabelRevised in order to compute the percentages
+of where axons synapse onto for every neurite
+-- this data will be used to perform the clusters
+
+SpineClusters:
+- calculates the different cluster groups based on teh Neurites target table
+
+heat_map_pinky:
+- does the heat map of the different fingerprints from the certain clusters
+
+
+
+

@@ -10,6 +10,7 @@ RUN apt-get -y install python3.7
 RUN apt -y install python3-pip
 RUN pip3 install datajoint --upgrade
 RUN pip3 install python-igraph xlrd
+RUN apt-get -y install vim
 RUN pip3 install matplotlib==3.0.3
 
 
@@ -22,7 +23,6 @@ RUN pip3 install jgraph
 
 
 
-RUN apt-get -y install vim
 RUN . /etc/profile
 
 RUN apt-get update && apt-get install -q -y \

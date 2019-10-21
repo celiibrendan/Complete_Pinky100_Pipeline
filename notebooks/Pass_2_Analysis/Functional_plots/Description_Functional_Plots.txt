@@ -1,0 +1,6 @@
+pinky100 directconn_Celii_clean_bin_10:
+Graphs it has
+1) Orientation difference vs. direction connections/probability of direction connection
+
+
+pinky100 

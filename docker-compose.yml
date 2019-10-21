@@ -10,4 +10,4 @@ services:
     ports:
       - "8899:8888"
     volumes:
-      - /notebooks:/notebooks
+      - /c:/notebooks

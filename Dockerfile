@@ -78,7 +78,7 @@ RUN apt-get -y install vim
 RUN . /etc/profile
 ADD ./CGAL /src/CGAL
 RUN pip3 install -e /src/CGAL/cgal_segmentation
-#RUN pip3 install -e /src/CGAL/cgal_skeleton
+RUN pip3 install -e /src/CGAL/cgal_skeleton
 
 
 RUN pip3 install scipy pandas

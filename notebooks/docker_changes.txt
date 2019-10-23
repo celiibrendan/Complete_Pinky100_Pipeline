@@ -19,3 +19,5 @@ cd pyvista
 python -m pip install -e .
 
 pip3 install pymeshfix --upgrade
+
+pip3 install matplotlib==3.0.3

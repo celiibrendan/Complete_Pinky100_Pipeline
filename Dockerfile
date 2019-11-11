@@ -58,13 +58,8 @@ RUN pip3 install sklearn pymeshfix
 
 #------------ 8/4 NEW ADDED FOR CGAL, MESHLAB AND OTHER APPLICATIONS -----  #
 
-#ADD /meshlab /meshlab
-#COPY --from=hamzamerzic/meshlab ./README.md /meshlab/README.md
 RUN apt-get -y update
-#RUN apt-get -y install software-properties-common
-#RUN add-apt-repository ppa:zarquon42/meshlab
-#RUN apt-get -y update
-RUN apt-get -y install meshlab
+#RUN apt-get -y install meshlab
 
 RUN apt-get -y update && \
     apt-get -y install graphviz libxml2-dev python3-cairosvg parallel
@@ -86,6 +81,12 @@ RUN pip3 install scipy pandas
 ADD ./python /src/funconnect/python
 RUN pip3 install -e /src/funconnect/python
 
+ADD /meshlab /meshlab
+#COPY --from=hamzamerzic/meshlab ./README.md /meshlab/README.md
+
+RUN apt-get -y install software-properties-common
+#RUN add-apt-repository ppa:zarquon42/meshlab
+RUN apt-get -y update
 
 RUN mkdir -p /scripts
 ADD ./jupyter/run_jupyter_unix.sh /scripts/

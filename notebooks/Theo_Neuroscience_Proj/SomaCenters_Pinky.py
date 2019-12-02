@@ -8,6 +8,7 @@
 Purpose: To use the soma extraction algorithm to extract soma centers, meshes and bounding
 boxes for the pinky data set (to be used for theoretical neuroscience project)
 
+Thing have to do to make sure meshlab is there: export PATH=$PATH:/meshlab/src/distrib
 """
 
 
@@ -21,6 +22,9 @@ import trimesh
 import numpy as np
 import datajoint as dj
 
+dj.config['database.host'] = '10.28.0.34'
+dj.config['database.user'] = 'celiib'
+dj.config['database.password'] = 'newceliipass'
 pinky = dj.create_virtual_module('pinky', 'microns_pinky')
 schema = dj.schema("microns_pinky")
 

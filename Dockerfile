@@ -81,12 +81,37 @@ RUN pip3 install scipy pandas
 ADD ./python /src/funconnect/python
 RUN pip3 install -e /src/funconnect/python
 
-ADD /meshlab /meshlab
-#COPY --from=hamzamerzic/meshlab ./README.md /meshlab/README.md
-
 RUN apt-get -y install software-properties-common
-#RUN add-apt-repository ppa:zarquon42/meshlab
 RUN apt-get -y update
+
+#### manually running the steps from https://hub.docker.com/r/hamzamerzic/meshlab/ ###
+
+# add all of the lines that will compile the meshlabserver
+WORKDIR /
+RUN git clone https://github.com/hamzamerzic/vcglib -b devel
+RUN git clone https://github.com/hamzamerzic/meshlab -b devel
+
+#replace the certain files in vcglib and meshlab so will compile
+RUN rm /vcglib/wrap/io_trimesh/import_nvm.h /vcglib/wrap/io_trimesh/import_out.h /meshlab/src/meshlab_mini.pro
+
+ADD ./meshlab_patch_files/import_nvm.h /vcglib/wrap/io_trimesh/import_nvm.h
+ADD ./meshlab_patch_files/import_out.h /vcglib/wrap/io_trimesh/import_out.h
+ADD ./meshlab_patch_files/meshlab_mini.pro /meshlab/src/meshlab_mini.pro
+
+ARG QMAKE_FLAGS="-spec linux-g++ CONFIG+=release CONFIG+=qml_release CONFIG+=c++11 QMAKE_CXXFLAGS+=-fPIC QMAKE_CXXFLAGS+=-std=c++11 QMAKE_CXXFLAGS+=-fpermissive INCLUDEPATH+=/usr/include/eigen3 LIBS+=-L/meshlab/src/external/lib/linux-g++"
+
+ARG MAKE_FLAGS="-j"
+
+WORKDIR /meshlab/src/external
+RUN qmake -qt=5 external.pro $QMAKE_FLAGS && make $MAKE_FLAGS
+
+WORKDIR /meshlab/src/common
+RUN qmake -qt=5 common.pro $QMAKE_FLAGS && make $MAKE_FLAGS
+
+WORKDIR /meshlab/src
+RUN qmake -qt=5 meshlab_mini.pro $QMAKE_FLAGS && make $MAKE_FLAGS
+
+WORKDIR /
 
 RUN mkdir -p /scripts
 ADD ./jupyter/run_jupyter_unix.sh /scripts/

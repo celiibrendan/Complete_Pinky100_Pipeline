@@ -1,0 +1,21 @@
+#!/bin/bash
+python3 0_SomaCenters_Pinky.py &
+python3 1_SomaCenters_Pinky.py &
+python3 2_SomaCenters_Pinky.py &
+python3 3_SomaCenters_Pinky.py &
+python3 4_SomaCenters_Pinky.py &
+python3 5_SomaCenters_Pinky.py &
+python3 6_SomaCenters_Pinky.py &
+python3 7_SomaCenters_Pinky.py &
+python3 8_SomaCenters_Pinky.py &
+python3 9_SomaCenters_Pinky.py &
+python3 10_SomaCenters_Pinky.py &
+python3 11_SomaCenters_Pinky.py &
+python3 12_SomaCenters_Pinky.py &
+python3 13_SomaCenters_Pinky.py &
+python3 14_SomaCenters_Pinky.py &
+python3 15_SomaCenters_Pinky.py &
+python3 16_SomaCenters_Pinky.py &
+python3 17_SomaCenters_Pinky.py &
+python3 18_SomaCenters_Pinky.py &
+python3 19_SomaCenters_Pinky.py &

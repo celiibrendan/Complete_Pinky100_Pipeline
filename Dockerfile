@@ -111,6 +111,8 @@ RUN qmake -qt=5 common.pro $QMAKE_FLAGS && make $MAKE_FLAGS
 WORKDIR /meshlab/src
 RUN qmake -qt=5 meshlab_mini.pro $QMAKE_FLAGS && make $MAKE_FLAGS
 
+ENV PATH="/meshlab/src/distrib:${PATH}"
+
 WORKDIR /
 
 RUN mkdir -p /scripts

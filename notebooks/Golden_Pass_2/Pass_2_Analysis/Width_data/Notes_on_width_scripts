@@ -1,0 +1,54 @@
+The one used for the table is:
+SignificantOrphanDendriteWidthLength
+1) Purpose: Pushes both the 95th percentil of min width and the skeleton length to table (pulls from Dendrite Width)
+
+**** only does the orphan dendrites for the width ******
+
+# Tables it needs to run:
+1) FilteredSkeleton
+2) DendriteWidth
+
+
+Calculating_Width: 
+Key_source: All excitatory or orphan components of significant length that have a filtered 
+--> table has compartment_type and compartment index
+
+Algorithm:
+1) Gets the full skeleton data
+2) Gets the vertices and triangles of the component part
+3) discretizes the skeleton even further
+4) calculates the min and max of the x,y,z of the discretized skeleton
+5) Makes a mesh of the component mesh from the vertices and triangles
+6) Calculates the bounding box of the mesh
+7) Filters the discretied skeletons by the mesh bounding box
+8) Creates a KDTree from the vertices of the mesh
+9) Gets the closest distance of the filtered skeleton vertices to the mesh
+10) Saves the percentiles in the width
+
+
+# Tables it needs to run:
+1) FilteredSkeleton
+2) DendriteWidth
+
+
+Note: Extra key,value pairs in dictonary do not mess up datajoint queries
+
+Process to Run: 
+1) Dendrite_Width
+2) SignificantOrphan....
+3) Analyzing_Dendrit
+
+
+Analyzing_Dendrite_Width:
+1) checks which DendriteWidth have at least a width > 0
+2) dendrite_accepted = DendriteWidth table with width > 0 restriction
+
+-- Visualizes the different distributions of widths for the different percentiles
+-- Finds out the orphan nurites to show for the pictures
+**-- Gets the graph distribution of the skeletal length and the 95% width for orphans
+-- Calculates average numbers for the orphan dendrites
+-- Makes an Orphan Dendrite Synapse Density vs. Width table
+
+
+# the only thing that I ened up doing was making official graph for 95th perc
+

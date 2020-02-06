@@ -1,8 +1,0 @@
-Brainstorming changes:
-0) Check to see that the leftover pieces has any vertices
---> if there are then display a message and write empty vertices and faces array to the table
-1) Always import the neuron from proofread label
-2) Import the leftover pieces and don't color them
-3) Only label the leftover pieces
-3) When done, write the leftover labels to the datajoint table
-- Delete the larger neuron

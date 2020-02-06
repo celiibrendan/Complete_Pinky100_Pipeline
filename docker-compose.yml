@@ -10,4 +10,5 @@ services:
     ports:
       - "8899:8888"
     volumes:
-      - /c:/notebooks
+      - /c:/notebooks3
+      - /at-storage3.ad.bcm.edu/scratch07:/notebooks

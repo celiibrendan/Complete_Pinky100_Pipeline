@@ -21,3 +21,25 @@ python -m pip install -e .
 pip3 install pymeshfix --upgrade
 
 pip3 install matplotlib==3.0.3
+
+
+------ for enabling ipyvolume in jupyter ---------
+apt install nodejs npm
+jupyter labextension install @jupyter-widgets/jupyterlab-manager
+jupyter labextension install ipyvolume
+
+------ for installing graph tool --------------
+1) created a file called: following lines
+/etc/apt/sources.list.d/docker.list and wrote the 
+
+deb http://downloads.skewed.de/apt/bionic bionic universe
+deb-src http://downloads.skewed.de/apt/bionic bionic universe
+
+2) then put the following commands
+apt-key adv --keyserver keys.openpgp.org --recv-key 612DEFB798507F25
+apt-get update
+
+3) did this command but had to enter the dialog boxes
+apt-get install python3-graph-tool -y -2 -37 -2 
+
+------ adding moduels for minnie mount

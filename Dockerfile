@@ -115,6 +115,18 @@ ENV PATH="/meshlab/src/distrib:${PATH}"
 
 WORKDIR /
 
+#---------additional widgets and packages for graph and 3D visualizaitons---------
+RUN pip3 install grave
+RUN apt install -y nodejs npm
+RUN jupyter labextension install -y @jupyter-widgets/jupyterlab-manager
+RUN jupyter labextension install -y ipyvolume
+
+# installing widgets for matplotlib3d
+RUN pip3 install ipympl
+RUN jupyter labextension install -y jupyter-matplotlib
+RUN jupyter nbextension enable --py widgetsnbextension
+RUN pip3 install pandasql
+
 RUN mkdir -p /scripts
 ADD ./jupyter/run_jupyter_unix.sh /scripts/
 ADD ./jupyter/jupyter_notebook_config.py /root/.jupyter/

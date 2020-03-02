@@ -43,3 +43,6 @@ apt-get update
 apt-get install python3-graph-tool -y -2 -37 -2 
 
 ------ adding moduels for minnie mount
+
+------ other libraries: 
+pip3 install grave

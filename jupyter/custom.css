@@ -9,3 +9,16 @@ div.cell.selected {
 div.output_scroll {
     resize: vertical !important;
 }
+
+div#notebook p, div#notebook{
+    font-size: 300%;
+    line-height: 300%;
+}
+.rendered_html pre, .rendered_html table{
+    font-size:300%;
+    line-height: 300%;
+}
+.CodeMirror, .CodeMirror pre, .CodeMirror-dialog, .CodeMirror-dialog .CodeMirror-search-field, .terminal-app .terminal {
+    font-size: 300%;
+    line-height: 300%;
+}

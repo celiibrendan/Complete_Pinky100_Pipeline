@@ -29,6 +29,12 @@ Pseudocode:
 # Testing 
 import datajoint as dj
 import numpy as np
+
+dj.config['database.host'] = '10.28.0.34'
+dj.config['database.user'] = 'celiib'
+dj.config['database.password'] = 'newceliipass'
+
+
 m65 = dj.create_virtual_module('m65', 'microns_minnie65_01')
 schema = dj.schema("microns_minnie65_01")
 dj.config["display.limit"] = 30

@@ -238,7 +238,7 @@ class WholeNeuronClassifier(object):
 
             print("\nStarting CGAL segmentation")
             if cgal_Flag == True:
-                print(f"Right before cgal segmentation, clusters = {clusters}, smoothness = {smoothness}")
+                print(f"Right before cgal segmentation, clusters = {clusters}, smoothness = {smoothness}, path_and_filename = {path_and_filename} ")
                 result = csm.cgal_segmentation(path_and_filename,clusters,smoothness)
                 print(result)
             print(f"Finished CGAL segmentation algorithm: {time.time() - start_time}")
@@ -333,7 +333,8 @@ class WholeNeuronClassifier(object):
         
         for dict_key,value in sdf_temp_dict.items():
 
-            sdf_final_dict[dict_key] = dict(median=np.median(value),mean=np.mean(value),max=np.amax(value))
+            sdf_final_dict[dict_key] = dict(median=np.median(value),mean=np.mean(value),max=np.amax(value),
+                                           n_faces=len(value))
 
 
         self.sdf_final_dict = sdf_final_dict
@@ -1107,6 +1108,7 @@ def extract_branches_whole_neuron(import_Off_Flag,
     #if import_Off_Flag == True:
     #if loading from an off file
     soma_only = kwargs.pop('soma_only', False)
+    return_classifier = kwargs.pop("return_classifier",False)
     
     mesh_file_location = kwargs.pop('mesh_file_location', "")
     file_name = kwargs.pop('file_name', "")
@@ -1286,8 +1288,13 @@ def extract_branches_whole_neuron(import_Off_Flag,
 
     if return_Only_Labels == True:
         if soma_only:
+            if return_classifier:
+                print("Returning the soma_sdf value AND the classifier")
+                return output_verts_list, output_faces_list,soma_sdf_value,classifier
             print("Returning the soma_sdf value")
             return output_verts_list, output_faces_list,soma_sdf_value
+        elif return_classifier:
+            return output_verts_list, output_faces_list, classifier
         else:
             return output_verts_list, output_faces_list
     

@@ -127,6 +127,10 @@ RUN jupyter labextension install -y jupyter-matplotlib
 RUN jupyter nbextension enable --py widgetsnbextension
 RUN pip3 install pandasql
 
+# ------------ Extensions added 5/13------------------#
+RUN pip3 install networkx
+RUN pip3 install git+https://github.com/cajal/minnie-config.git
+
 RUN mkdir -p /scripts
 ADD ./jupyter/run_jupyter_unix.sh /scripts/
 ADD ./jupyter/jupyter_notebook_config.py /root/.jupyter/

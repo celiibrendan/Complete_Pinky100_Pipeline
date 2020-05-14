@@ -40,6 +40,10 @@ schema = dj.schema("microns_minnie65_01")
 dj.config["display.limit"] = 30
 
 import minfig
+from minfig import * # This will also import the attribute adapters into the namespace
+
+minfig.configure_minnie()
+
 minnie = minfig.configure_minnie(return_virtual_module=True)
 
 

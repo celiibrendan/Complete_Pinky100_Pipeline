@@ -135,7 +135,7 @@ class Scripter:
                     if "type" not in data[list(data.keys())[0]].keys():
                         filter_type = "xmlfilter"
                         param_type = "xmlparam"
-                #print(f"filter_type = {filter_type}")
+                print(f"filter_type = {filter_type}")
                 
                 f.write('<{filter_type} name="{name}"{spacer}>\n'.format(
                     filter_type=filter_type,
@@ -372,7 +372,7 @@ class Decimator(Meshlab):
         )
         
         if subprocess_result.returncode != 0:
-            raise Exception('neuron {} did not fix the manifold edges (meshlab script failed)'.format(segment_id)) 
+            raise Exception('neuron {} did not fix the manifold edges (meshlab script failed) with output:{} '.format(segment_id,subprocess_result.stdout.decode())) 
 #         if str(subprocess_result)[-13:] != "returncode=0)":
 #             raise Exception('neuron {} did not fix the manifold edges (meshlab script failed)'.format(segment_id))
         
@@ -531,7 +531,7 @@ class Poisson(Meshlab):
         )
         
         if subprocess_result.returncode != 0:
-            raise Exception('neuron {} did not fix the manifold edges (meshlab script failed)'.format(segment_id)) 
+            raise Exception('neuron {} did not fix the manifold edges (meshlab script failed) with output:{} '.format(segment_id,subprocess_result.stdout.decode())) 
 #         if str(subprocess_result)[-13:] != "returncode=0)":
 #             raise Exception('neuron {} did not fix the manifold edges (meshlab script failed)'.format(segment_id))
         if return_mesh:

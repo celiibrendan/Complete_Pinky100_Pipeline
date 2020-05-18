@@ -138,7 +138,7 @@ class DecimationTest(dj.Computed):
             if True:
                 #running the actual decimation
                 new_mesh = mls_func(mesh.vertices, mesh.faces, segment_id,random_port=True)
-                new_vertices, new_faces = new_mesh.vertices, new_mesh.faces
+                #new_vertices, new_faces = new_mesh.vertices, new_mesh.faces
                 #makes the entry into the table
 #                 self.make_entry(
 #                     segment_id=segment_id,

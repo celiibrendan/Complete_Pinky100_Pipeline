@@ -3,8 +3,14 @@
 
 # In[1]:
 
-
+# Testing 
 import datajoint as dj
+import numpy as np
+
+dj.config['database.host'] = '10.28.0.34'
+dj.config['database.user'] = 'celiib'
+dj.config['database.password'] = 'newceliipass'
+
 from meshlab import Decimator
 from minfig import * # Required for the adapters to be used with locally defined tables
 

@@ -221,6 +221,7 @@ class Meshlab:
 
         script_command = (" -i " + str(input_obj) + " -o " + 
                                         str(output_obj) + " -s " + str(self.mls_script_obj))
+
         if not random_port:
             command_to_run = 'xvfb-run -a -s "-screen 0 800x600x24" meshlabserver $@ ' + script_command
         else:
@@ -230,6 +231,7 @@ class Meshlab:
             
             print(f"Using port = {port_number}")
             command_to_run = f'xvfb-run -n {port_number} -s "-screen 0 800x600x24" meshlabserver $@ ' + script_command
+            
         from subprocess import PIPE
         if printout:
             print(command_to_run)
@@ -379,7 +381,7 @@ class Decimator(Meshlab):
         )
         
         if subprocess_result.returncode != 0:
-            raise Exception('neuron {} did not fix the manifold edges (meshlab script failed)'.format(segment_id)) 
+            raise Exception('neuron {} did not fix the manifold edges (meshlab script failed) with output:{} '.format(segment_id,subprocess_result.stdout.decode())) 
 #         if str(subprocess_result)[-13:] != "returncode=0)":
 #             raise Exception('neuron {} did not fix the manifold edges (meshlab script failed)'.format(segment_id))
         
@@ -538,7 +540,7 @@ class Poisson(Meshlab):
         )
         
         if subprocess_result.returncode != 0:
-            raise Exception('neuron {} did not fix the manifold edges (meshlab script failed)'.format(segment_id)) 
+            raise Exception('neuron {} did not fix the manifold edges (meshlab script failed) with output:{} '.format(segment_id,subprocess_result.stdout.decode())) 
 #         if str(subprocess_result)[-13:] != "returncode=0)":
 #             raise Exception('neuron {} did not fix the manifold edges (meshlab script failed)'.format(segment_id))
         if return_mesh:
